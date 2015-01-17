@@ -7,7 +7,7 @@ class FetcherFromEnum < FetcherBase
 	end
 
 	def parse_url
-		return nil if item = @data.next
+		return nil unless item = @data.next
 		item
 	end
 

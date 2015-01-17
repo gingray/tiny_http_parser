@@ -20,7 +20,7 @@ class RepeatableElement
 
 	def reorganize_elements
 		@index = 0
-		@elements = @elements.select { |e| e[1] < @max_get }
+		@elements = []
 	end
 
 end

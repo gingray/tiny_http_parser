@@ -21,7 +21,7 @@ Or install it yourself as:
 require 'tiny_parser'
 
 fetcher = FetcherFromEnum.new ['http://ya.ru','http://google.com']
-fetcher.on_content_get do |content|
+fetcher.on_content_get do |url, content, http_client|
 	puts '[+]'+ content.slice(0, 10)
 end
 

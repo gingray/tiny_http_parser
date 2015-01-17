@@ -34,6 +34,7 @@ class FetcherBase
 	end
 
 	def perform
+		before_start if defined? before_start
 		raise 'no on_content_get block given' unless @content_block
 		http_client = HTTPClient.new
 		http_client = HTTPClient.new(get_proxy) if proxy_set?
@@ -46,7 +47,7 @@ class FetcherBase
 			rescue Exception => e
 				@exception_raised_block.call(e,url,http_client) if @exception_raised_block
 			else
-				@content_block.call content
+				@content_block.call url, content, http_client
 			end
 			http_client = HTTPClient.new(get_proxy) if proxy_set?
 	end
