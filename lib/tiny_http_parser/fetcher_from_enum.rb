@@ -3,15 +3,12 @@ require_relative 'fetcher_base'
 class FetcherFromEnum < FetcherBase
 
 	def initialize enumerable
-		@enumerable = enumerable.to_a
-		@counter = 0
+		@data =  RepeatableElement.new enumerable
 	end
 
 	def parse_url
-		return nil if @counter >= @enumerable.length
-		result = @enumerable[@counter]
-		@counter += 1
-		result
+		return nil if item = @data.next
+		item
 	end
 
 end
