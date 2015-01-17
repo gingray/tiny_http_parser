@@ -1,4 +1,5 @@
-require 'httpclient'
+# require 'httpclient'
+require 'faraday'
 class FetcherBase
 
 	def initialize
@@ -21,8 +22,8 @@ class FetcherBase
 		raise 'abstract method called exception'
 	end
 
-	def on_content_get &block
-		@content_block = block if block_given?
+	def on_action &block
+		@on_action = block if block_given?
 	end
 
 	def configure &block
@@ -35,21 +36,16 @@ class FetcherBase
 
 	def perform
 		before_start if defined? before_start
-		raise 'no on_content_get block given' unless @content_block
-		http_client = HTTPClient.new
-		http_client = HTTPClient.new(get_proxy) if proxy_set?
+		raise 'no on_action block given' unless @on_action
+		http_client = Faraday.new
 		while true do
 			url = parse_url
 			break unless url
-			content_block.call(http_client) if @configure_block
 			begin
-				content = http_client.get_content url
+				@on_action.call url, http_client
 			rescue Exception => e
 				@exception_raised_block.call(e,url,http_client) if @exception_raised_block
-			else
-				@content_block.call url, content, http_client
 			end
-			http_client = HTTPClient.new(get_proxy) if proxy_set?
 	end
 	end
 end
