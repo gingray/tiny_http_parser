@@ -4,11 +4,11 @@ class RepeatableElement
 
 	def initialize elements
 		@elements = elements.map {|e| [e, 0] }
-		@index
+		@index = 0
 	end
 
 	def next
-		reorganize_elements if @index >= @element.length
+		reorganize_elements if @index >= @elements.length
 		return nil if @elements.length == 0
 		result = @elements[@index][0]
 		@elements[@index][1] += 1
