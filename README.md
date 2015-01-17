@@ -18,6 +18,7 @@ Or install it yourself as:
 
 ## Usage
 
+```ruby
 require 'tiny_parser'
 
 fetcher = FetcherFromEnum.new ['http://ya.ru','http://google.com']
@@ -30,7 +31,7 @@ fetcher.on_exception_raised do |e|
 end
 
 fetcher.perform
-
+```
 ## Contributing
 
 1. Fork it ( https://github.com/[my-github-username]/tiny_http_parser/fork )
